@@ -24,3 +24,5 @@ To use the sidebar you need to add the scope `https://www.googleapis.com/auth/sc
 
 This is a sensitive scope, so you will need to justify why you need it when you are releasing the script to the Google Workspace Marketplace.
 
+See [this page](https://developers.google.com/apps-script/concepts/scopes) for more information about authorization scopes.
+
