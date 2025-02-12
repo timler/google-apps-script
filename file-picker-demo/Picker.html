@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <!-- Add the standard Google Style Sheet. -->
+    <link rel="stylesheet" href="https://ssl.gstatic.com/docs/script/css/add-ons1.css">
+    <!-- Add custom styles -->
+    <style>
+        /* Remove default margins, make it fill the space, and prevent x scrollbars */
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            overflow-x: hidden;
+        }
+        .picker {
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+    <script type="text/javascript">
+        var pickerApiLoaded = false;
+
+        /**
+         * Loads the Google Picker API
+         * This function is called when the API is loaded in the 'onApiLoad' function.
+         * It is referenced in the HTML script tag.
+         */
+        function onApiLoad() {
+            gapi.load('picker', {
+                'callback': function() {
+                    pickerApiLoaded = true;
+                }
+            });
+            // Runs Apps Script Function 'getOAuthToken' and passes in the OAuth
+            // token to the 'createPicker' function. If an error occurs, the 
+            // 'showError' function is called.
+            google.script.run
+                .withSuccessHandler(createPicker)
+                .withFailureHandler(showError)
+                .getOAuthToken();
+        }
+
+        /**
+         * Creates the Google Picker
+         * This function is called when the OAuth token is received from the 
+         * 'getOAuthToken' function in the 'onApiLoad' function.
+         */
+        function createPicker(token) {
+            if (pickerApiLoaded && token) {
+                // Creates a DocsView object to select folders
+                // https://developers.google.com/drive/picker/reference/picker.docsview
+                var docsView = new google.picker.DocsView()
+                    .setIncludeFolders(true) 
+                    .setMimeTypes('application/vnd.google-apps.folder')
+                    .setSelectFolderEnabled(true);
+
+                // Creates a PickerBuilder object
+                // https://developers.google.com/drive/picker/reference/picker.pickerbuilder
+                var picker = new google.picker.PickerBuilder()
+                    .addView(docsView)
+                    .enableFeature(google.picker.Feature.NAV_HIDDEN)
+                    .hideTitleBar()
+                    .setOAuthToken(token)
+                    .setCallback(pickerCallback)
+                    .setOrigin('https://docs.google.com')
+                    .build();
+
+                // Displays the picker in a modal dialogue
+                picker.setVisible(true);
+            } else {
+                // If the picker API is not loaded or the OAuth token is not received,
+                // display an error message.
+                showError('Unable to load the file picker.');
+            }
+        }
+
+        /**
+         * A callback function that extracts the chosen document's metadata from the
+         * response object. For details on the response object, see
+         * https://developers.google.com/drive/picker/reference/picker.responseobject
+         *
+         * @param {object} data The response object.
+         */
+        function pickerCallback(data) {
+            var action = data[google.picker.Response.ACTION];
+            if (action == google.picker.Action.PICKED) {
+                // Get the first document from the response object
+                var doc = data[google.picker.Response.DOCUMENTS][0];
+                // Get the ID of the document
+                var id = doc[google.picker.Document.ID];
+                // Runs Apps Script Function 'pickerCallback' and passes in the item id 
+                // from Google Picker. If the function completes successfully then the 
+                // 'closeDialogue' function is called. If an error occurs, the
+                // 'showError' function is called.
+                google.script.run
+                    .withSuccessHandler(closeDialogue)
+                    .withFailureHandler(showError)
+                    .pickerCallback(id);
+            }
+            else if (action == google.picker.Action.CANCEL) {
+                closeDialogue();
+            }
+        }
+
+        /**
+         * This function is used as a SuccessHandler for 'pickerCallback' so it will
+         * only close the dialogue box if it completes successfully.
+         */
+        function closeDialogue() {
+            google.script.host.close();
+        }
+
+        /**
+         * This function is used as a FailureHandler for 'pickerCallback' so it will
+         * display an error message if the 'pickerCallback' function fails.
+         */
+        function showError(message) {
+            document.getElementById('result').innerHTML = 'Error: ' + message;
+        }
+    </script>
+</head>
+
+<body>
+    <div class="picker">
+        <p id='result'></p>
+    </div>
+    <script type="text/javascript" src="https://apis.google.com/js/api.js?onload=onApiLoad"></script>
+</body>
+</html>
