@@ -14,7 +14,7 @@
  * the mobile add-on version.
  *
  * @param {object} e The event parameter for a simple onOpen trigger. To
- *     determine which authorization mode (ScriptApp.AuthMode) the trggr is
+ *     determine which authorization mode (ScriptApp.AuthMode) the trigger is
  *     running in, inspect e.authMode.
  */
 function onOpen(e) {
