@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <base target="_top">
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        padding: 10px;
+      }
+      .button {
+        background-color: #4CAF50;
+        border: none;
+        color: white;
+        padding: 10px 20px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 14px;
+        margin: 4px 2px;
+        cursor: pointer;
+        border-radius: 4px;
+      }
+    </style>
+  </head>
+  <body>
+    <h2>My Sidebar</h2>
+    <p>This is a sample sidebar for Google Docs!</p>
+    <!-- Button to insert text into the document - runs the 'insertText' function in the Code.gs file -->
+    <button class="button" onclick="google.script.run.insertText()">Insert Text</button>
+  </body>
+</html>
