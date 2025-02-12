@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <base target="_top">
+    <style>
+      body {
+        font-family: Montserrat, sans-serif;
+        padding: 10px;
+      }
+      .button {
+        background-color: #4CAF50;
+        border: none;
+        color: white;
+        padding: 10px 20px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        margin: 4px 2px;
+        cursor: pointer;
+        border-radius: 4px;
+      }
+    </style>
+  </head>
+  <body>
+    <p id="error" style="display: none; color: red;"></p>
+    <button class="button" onclick="runScript()">Click Me!</button>
+  </body>
+  <script>
+    function runScript() {
+        // Run the server function (in Code.gs)
+        google.script.run
+        .withSuccessHandler(function() { // close the popup if successful
+            google.script.host.close();
+            
+        })
+        .withFailureHandler(function(error) { // show error if not
+            document.getElementById("error").innerHTML = error;
+            document.getElementById("error").style.display = "block";
+        })
+        .sayHello();
+    }
+  </script>
+</html>
