@@ -131,6 +131,26 @@
             <label for="highlightWeekends">Highlight weekends</label>
           </div>
         </div>
+        <div class="form-group">
+          <label class="control-label">Calendar Size:</label>
+          <div class="radio-group">
+            <input type="radio" id="sizeMini" name="calendarSize" value="mini" checked>
+            <label for="sizeMini">Mini</label>
+            <input type="radio" id="sizeMedium" name="calendarSize" value="medium">
+            <label for="sizeMedium">Medium</label>
+            <input type="radio" id="sizeFull" name="calendarSize" value="full">
+            <label for="sizeFull">Full Page</label>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="control-label">Page Orientation:</label>
+          <div class="radio-group">
+            <input type="radio" id="orientationPortrait" name="orientation" value="portrait" checked>
+            <label for="orientationPortrait">Portrait</label>
+            <input type="radio" id="orientationLandscape" name="orientation" value="landscape">
+            <label for="orientationLandscape">Landscape</label>
+          </div>
+        </div>
         <input type="submit" class="blue" id="insert-calendar" value="Insert" />
       </form>
     </div>
@@ -176,7 +196,9 @@
               document.getElementById('year').value,
               document.getElementById('month').value,
               document.querySelector('input[name="startDay"]:checked').value,
-              document.getElementById('highlightWeekends').checked
+              document.getElementById('highlightWeekends').checked,
+              document.querySelector('input[name="calendarSize"]:checked').value,
+              document.querySelector('input[name="orientation"]:checked').value
             );
       }
 

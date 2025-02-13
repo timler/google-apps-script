@@ -17,7 +17,7 @@ var weekDays = [  "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Frida
  * function without loading the sidebar.
  */
 function test() {
-  insertCalendar(2017, 8, 0, true);
+  insertCalendar(2017, 8, 0, true, 'full', 'portrait');
 }
 
 /**
@@ -27,10 +27,30 @@ function test() {
  * @param {number} month The month of the calendar (0-11)
  * @param {number} startDay The day of the week to start the calendar (0-6, where 0 is Sunday)
  * @param {boolean} highlightWeekends Whether to highlight the weekends
+ * @param {string} size The size of the calendar ('mini', 'medium', or 'full')
+ * @param {string} orientation The page orientation ('portrait' or 'landscape')
  */
-function insertCalendar(year, month, startDay, highlightWeekends) {
+function insertCalendar(year, month, startDay, highlightWeekends, size, orientation) {
   var doc = DocumentApp.getActiveDocument();
   var body = doc.getBody();
+
+  // Determine cell padding based on size and orientation
+  var cellPadding = '';
+  var isLandscape = orientation === 'landscape';
+  
+  switch(size) {
+    case 'mini':
+      cellPadding = '';
+      break;
+    case 'medium':
+      cellPadding = isLandscape ? '' : '\n\n';
+      break;
+    case 'full':
+      cellPadding = isLandscape ? '\n\n' : '\n\n\n\n';
+      break;
+    default:
+      cellPadding = '';
+  }
 
   month = parseInt(month, 10); // ensure month is a number
   startDay = parseInt(startDay, 10) || 0; // ensure startDay is a number, default to 0 if undefined
@@ -60,7 +80,7 @@ function insertCalendar(year, month, startDay, highlightWeekends) {
   var row = 1;
   var col = startingDay;
   while (cur_month == date.getMonth()) {
-    cells[row][col] = date.getDate() + '\n\n\n\n';
+    cells[row][col] = date.getDate() + cellPadding;
     col += 1;
     if (col > 6) {
       col = 0;
@@ -89,9 +109,20 @@ function insertCalendar(year, month, startDay, highlightWeekends) {
   var table = body.insertTable(insertPosition + 1, cells);
   table.setFontSize(12);
 
+  // Set table columns to be narrower if it's a landscape mini calendar
+  if (orientation === 'landscape' && size === 'mini') {
+    for (var i = 0; i < 7; i++) {
+      table.setColumnWidth(i, 47);
+    }
+  }
+
   // Set font size for header row
   var headerRow = table.getRow(0);
-  headerRow.setFontSize(9);
+  if (orientation === 'landscape' && size === 'mini') {
+    headerRow.setFontSize(6); // smaller for the landscape mini calendar
+  } else {
+    headerRow.setFontSize(9);
+  }
 
   // When styling the cells, update the weekend highlighting logic:
   for (var r = 1; r < table.getNumRows(); r++) {
