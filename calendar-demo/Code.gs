@@ -17,7 +17,7 @@ var weekDays = [  "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Frida
  * function without loading the sidebar.
  */
 function test() {
-  insertCalendar(2017, 8, 0);
+  insertCalendar(2017, 8, 0, true);
 }
 
 /**
@@ -26,8 +26,9 @@ function test() {
  * @param {number} year The year of the calendar
  * @param {number} month The month of the calendar (0-11)
  * @param {number} startDay The day of the week to start the calendar (0-6, where 0 is Sunday)
+ * @param {boolean} highlightWeekends Whether to highlight the weekends
  */
-function insertCalendar(year, month, startDay) {
+function insertCalendar(year, month, startDay, highlightWeekends) {
   var doc = DocumentApp.getActiveDocument();
   var body = doc.getBody();
 
@@ -90,7 +91,22 @@ function insertCalendar(year, month, startDay) {
 
   // Set font size for header row
   var headerRow = table.getRow(0);
-  headerRow.setFontSize(10);
+  headerRow.setFontSize(9);
+
+  // When styling the cells, update the weekend highlighting logic:
+  for (var r = 1; r < table.getNumRows(); r++) {
+    for (var c = 0; c < 7; c++) {
+      var cell = table.getCell(r, c);
+      // Highlight weekends if the option is enabled
+      if (highlightWeekends) {
+        // Calculate the actual day of week based on the startDay setting
+        var adjustedColumn = (c + startDay) % 7;
+        if (adjustedColumn === 0 || adjustedColumn === 6) {
+          cell.setBackgroundColor('#F5F5F5');
+        }
+      }
+    }
+  }
 }
 
 /**
