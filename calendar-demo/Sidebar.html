@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <base target="_top">
+    <link rel="stylesheet" href="https://ssl.gstatic.com/docs/script/css/add-ons1.css">
+    <!-- The CSS package above applies Google styling to buttons and other elements. -->
+    <style>
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+        color: #444444;
+        font-size: 14px;
+      }
+      h1 {
+        font-size: 24px;
+        font-weight: 800;
+      }
+      label {
+        margin-bottom: 8px;
+        font-weight: 500;
+      }
+      a {
+        color: #1a73e8;
+        text-decoration: none;
+        transition: color 0.2s ease;
+      }
+      a:hover {
+        text-decoration: none;
+        color: #1557b0;
+      }
+      input[type='number'], input[type='select'], input[type='submit'], select {
+        font-size: 14px;
+        height: 40px;
+        min-width: 100px;
+      }
+      input[type='number'] {
+        width: 80px;
+        min-width: unset;
+      }
+      input[type="submit"] {
+        display: block;
+        cursor: pointer;
+      }
+      .form-group {
+        margin-bottom: 16px;
+      }
+      .year-month .form-group {
+        display: inline-block;
+      }
+      .form-group label {
+        min-width: 150px;
+      }
+      .error {
+        color: #d93025;
+        margin: 8px 0;
+      }
+      .bottom {
+        margin-top: 24px;
+        border-top: 1px solid #dadce0;
+        padding-top: 12px;
+      }
+      .branding-text {
+        font-size: 13px;
+        letter-spacing: 0.01em;
+      }
+      .radio-group {
+        display: flex;
+      }
+      .radio-group label {
+        margin-right: 16px;
+        min-width: unset;
+        display: inline-flex;
+        align-items: center;
+      }
+      input[type="radio"] {
+        margin-right: 4px;
+        margin-top: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="sidebar branding-below">
+      <form class="form-horizontal" id="calendar-form">
+        <h1>Insert a Calendar</h1>
+        <div class="error" id="error"><p>&nbsp;</p></div>
+        <p>Make your selection below and click Insert when you're done. A calendar will be inserted into your Google Doc.</p>
+        <div class="year-month">
+          <div class="form-group">
+            <label for="year" class="control-label">Year:</label>
+            <input type="number" name="year" id="year" size="4" length="4"/>
+          </div>
+          <div class="form-group">
+            <label for="month" class="control-label">Month:</label>
+            <select name="month" id="month">
+              <option value="0">January</option>
+              <option value="1">February</option>
+              <option value="2">March</option>
+              <option value="3">April</option>
+              <option value="4">May</option>
+              <option value="5">June</option>
+              <option value="6">July</option>
+              <option value="7">August</option>
+              <option value="8">September</option>
+              <option value="9">October</option>
+              <option value="10">November</option>
+              <option value="11">December</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="control-label">Week Starts On:</label>
+          <div class="radio-group">
+            <input type="radio" id="startDay0" name="startDay" value="0" checked>
+            <label for="startDay0">Sunday</label>
+            <input type="radio" id="startDay1" name="startDay" value="1">
+            <label for="startDay1">Monday</label>
+          </div>
+        </div>
+        <input type="submit" class="blue" id="insert-calendar" value="Insert" />
+      </form>
+    </div>
+    <div class="sidebar bottom">
+      <span class="gray branding-text">Made by <a href="https://github.com/timler" target="_blank">Dagmar Timler</a></span>
+    </div>
+
+    <script>
+      /**
+       * On document load, assign click handlers to the button
+       */
+      document.addEventListener('DOMContentLoaded', function() {
+        const now = new Date();
+        document.getElementById('year').value = now.getFullYear();
+        document.getElementById('month').value = now.getMonth();
+        document.getElementById('insert-calendar').addEventListener('click', insertTheCalendar);
+      });
+
+      /**
+       * Runs a server-side function to do the magic
+       */
+      function insertTheCalendar(e) {
+        e.preventDefault();
+
+        // disable the button and clear the error
+        const button = this;
+        button.disabled = true;
+        document.getElementById('error').innerHTML = '<p>&nbsp;</p>';
+
+        // run the method 'insertCalendar' in the Google Apps Script code
+        google.script.run
+            .withSuccessHandler(
+              function(returnSuccess) {
+                button.disabled = false;
+              })
+            .withFailureHandler(
+              function(msg) {
+                showError(msg);
+                button.disabled = false;
+              })
+            .withUserObject(this)
+            .insertCalendar(
+              document.getElementById('year').value,
+              document.getElementById('month').value,
+              document.querySelector('input[name="startDay"]:checked').value
+            );
+      }
+
+      /**
+       * Displays an error message
+       * @param msg The error message to display.
+       */
+      function showError(msg) {
+        document.getElementById('error').innerHTML = '<p>' + msg + '</p>';
+      }
+    </script>
+  </body>
+</html>
