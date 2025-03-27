@@ -35,10 +35,13 @@ function onInstall(e) {
  * user clicks the "Show File Picker" menu item.
  */
 function showPicker() {
+  // Create the HTML output
   var html = HtmlService.createHtmlOutputFromFile('Picker')
-      .setWidth(600)
-      .setHeight(425)
-      .setSandboxMode(HtmlService.SandboxMode.IFRAME);   
+      .setWidth(1050)
+      .setHeight(650)
+      .setSandboxMode(HtmlService.SandboxMode.IFRAME);
+  
+  // Display the modal dialog
   DocumentApp.getUi().showModalDialog(html, 'Select a Folder');
 }
 
