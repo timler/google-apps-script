@@ -85,13 +85,16 @@ See [this page](https://developers.google.com/apps-script/concepts/scopes) for m
 
 These are the things you will need to have ready before you can publish your add-on:
 
-1. A name and description (long/short) for your add-on
-2. A verified website with a home page, privacy policy, terms of service, and contact-us info
-3. Graphic assets
-4. Demo video for verification purposes
-5. Video for the add-on listing (optional)
+1. A name and description (long/short) for your add-on. <small>[Jump to section](#21-names-and-descriptions)</small>
+2. A verified website with a home page, privacy policy, terms of service, and contact-us info <small>[Jump to section](#22-a-verified-home-page-privacy-policy-and-terms-of-service)</small>
+3. Graphic assets <small>[Jump to section](#23-graphic-assets)</small>
+4. Demo video for verification purposes <small>[Jump to section](#24-demo-video)</small>
+5. Video for the add-on listing (optional) <small>[Jump to section](#25-optional-assets)</small>
 
-Importantly, if you use any Google Trademarks (e.g. Docs, Sheets, Slides, Forms) in any text please add ™ after every reference.
+> **Importantly:**  
+> If you use any Google Trademarks (e.g. Docs, Sheets, Slides, Forms) in any text please add ™ after every reference.
+
+See [this page](https://developers.google.com/workspace/marketplace/about-app-review#reqs_all) for an exhaustive checklist of the requirements for publishing an add-on.
 
 ##### 2.1 Names and descriptions
 
@@ -141,9 +144,6 @@ Once you are finished the video, it should be uploaded to Youtube (unlisted if y
 
 You can also add a video to your add-on listing, that will be shown to users when they are viewing your add-on listing. This is optional, but it can be a good way to show off your add-on.
 
-##### Handy Checklist
-
-See [this page](https://developers.google.com/workspace/marketplace/about-app-review#reqs_all) for an exhaustive checklist of the requirements for publishing an add-on.
 
 #### Step 3. Create a project in the Google Cloud Console
 
