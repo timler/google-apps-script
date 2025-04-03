@@ -6,18 +6,6 @@ This repository contains a collection of Google Apps Script demos with Google Do
 - [How to use this repository](#how-to-use-this-repository)
 - [What is Google Apps Script?](#what-is-google-apps-script)
 - [How to publish a Google Docs Add-on](#how-to-publish-a-google-docs-add-on)
-  - [Step 1: Review OAuth Scopes](#step-1-do-a-review-of-your-oauth-scopes)
-    - [Workarounds for Scopes](#workarounds-for-some-common-sensitive-and-restricted-scopes)
-  - [Step 2: Get Resources Ready](#step-2-get-all-your-resources-ready)
-    - [Names and Descriptions](#21-names-and-descriptions)
-    - [Verified Website](#22-a-verified-home-page-privacy-policy-and-terms-of-service)
-    - [Graphic Assets](#23-graphic-assets)
-    - [Demo Video](#24-demo-video)
-    - [Optional Assets](#25-optional-assets)
-  - [Step 3: Create Cloud Project](#step-3-create-a-project-in-the-google-cloud-console)
-  - [Step 4: Deploy Add-on](#step-4-create-a-deployed-version-of-your-add-on)
-  - [Step 5: OAuth Setup](#step-5-create-your-oauth-consent-screen)
-  - [Step 6: Create Listing](#step-6-create-your-add-on-listing)
 
 ## How to use this repository
 
@@ -27,17 +15,13 @@ To run a project, open the project folder and open the demo document. You should
 
 ## What is Google Apps Script?
 
-Google Apps Script is a JavaScript-based language that allows you to automate tasks across Google products and third-party services. 
+Google Apps Script is a JavaScript-based language that allows you to automate tasks across Google products and third-party services. [Read more](https://developers.google.com/apps-script).
 
-See [this page](https://developers.google.com/apps-script) for more information.
-
-Google Apps Scripts are a powerful way to extend the functionality of Google Docs, Sheets, Slides, and Forms with add-ons (extensions).
-
-See [this page](https://developers.google.com/apps-script/add-ons) for more information.
+Google Apps Scripts are a powerful way to extend the functionality of Google Docs, Sheets, Slides, and Forms with add-ons (extensions). [Read more](https://developers.google.com/apps-script/add-ons).
 
 ### How to publish a Google Docs Add-on
 
-This can be a laborious process, but it is the only way to make your script available to others or to use the script in multiple documents. (Making your script available as a library isn't very user-friendly for non-developer users, who will need to write some code to make it work.)
+This can be a laborious process, but it is the only way to make your script available to others or to use the script in multiple documents.
 
 > **Note**  
 > If you have a private Google Domain, you can publish your add-on privately to your domain and avoid the need to publish to the Google Workspace Marketplace, but if you don't unfortunately you will need to publish to the Google Workspace Marketplace.
@@ -49,11 +33,18 @@ There are two major parts to publishing an add-on:
 1. OAuth configuration (and verification)
 2. Publishing to the Google Workspace Marketplace (and verification)
 
-OAuth is the process of verifying that you are the owner of the add-on and specifying the permissions that your add-on will need. This is linked to the authorization flow of your add-on. When OAuth is verified then you no longer have to go to "Advanced" when you are authorizing the add-on.
+*OAuth* is the process of verifying that you are the owner of the add-on and specifying the permissions that your add-on will need. This is linked to the authorization flow of your add-on. When OAuth is verified then you no longer have to go to "Advanced" when you are authorizing the add-on.
 
-Publishing to the Google Workspace Marketplace is the process of creating a listing for your add-on in the Google Workspace Marketplace. This is where users can find and install your add-on.
+*Publishing to the Google Workspace Marketplace* is the process of creating a listing for your add-on in the Google Workspace Marketplace. This is where users can find and install your add-on.
 
 Here are the basic steps, once you have created your code and tested:
+
+1. [Do a review of your OAuth scopes](#step-1-do-a-review-of-your-oauth-scopes)
+2. [Get all your resources ready](#step-2-get-all-your-resources-ready)
+3. [Create a project in the Google Cloud Console](#step-3-create-a-project-in-the-google-cloud-console)
+4. [Create a deployed version of your add-on](#step-4-create-a-deployed-version-of-your-add-on)
+5. [Create your OAuth consent screen](#step-5-create-your-oauth-consent-screen)
+6. [Create your add-on listing](#step-6-create-your-add-on-listing)
 
 #### Step 1: Do a review of your OAuth scopes
 
@@ -87,7 +78,7 @@ Drive scopes are particularly tricky. Using `DriveApp` generally requires you to
 
 See [this page](https://developers.google.com/apps-script/concepts/scopes) for more information about authorization scopes.
 
-> **How to find the scopes your project uses**
+> **How to find the scopes your project uses**  
 > Open the App Script editor and click on the overview tab. Project OAuth Scopes are displayed at the bottom of the page. If you edit the code, the scopes will be updated automatically, but you can edit them manually with the appscript.json file, which can be enabled on the Project Settings page by checking "Show appscript.json manifest in editor".
 
 #### Step 2. Get all your resources ready
@@ -195,13 +186,13 @@ You will need to add the scopes that your add-on uses. You should take the scope
 
 If you have any sensitive or restricted scopes, you will need to justify why you need them and provide a link to a demo video that shows the add-on in action.
 
-Here are some helpful links:
+Here are some helpful links to help with OAuth verification:
 
 * [Configure OAuth](https://developers.google.com/workspace/marketplace/configure-oauth-consent-screen)
 * [OAuth App Verification Help Center](https://support.google.com/cloud/answer/13463073)
 * [Verify your site ownership](https://support.google.com/webmasters/answer/9008080)
 
-> **Note:**
+> **Note:**  
 > You will need to get the OAuth consent screen verified before you can publish your add-on. This step can take a while, so be patient.
 
 #### Step 6. Create your add-on listing
@@ -229,4 +220,4 @@ Store Listing is what users will see when they are browsing the Google Workspace
 
 This should be the easy part, but you still need to get your listing, and any future updates to your listing, to be reviewed before it's made public.
 
-For more help, [go here](https://developers.google.com/workspace/marketplace/create-listing).
+For more help on creating a listing, [go here](https://developers.google.com/workspace/marketplace/create-listing).
