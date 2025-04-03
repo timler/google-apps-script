@@ -1,0 +1,8 @@
+{
+  "timeZone": "Africa/Johannesburg",
+  "dependencies": {
+  },
+  "exceptionLogging": "STACKDRIVER",
+  "oauthScopes": ["https://www.googleapis.com/auth/documents.currentonly"],
+  "runtimeVersion": "V8"
+}
